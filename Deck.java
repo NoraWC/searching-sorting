@@ -60,7 +60,9 @@ public class Deck {
     public void listHand() {
         for(int i = 0; i < hand.length; i++) {
             System.out.print(hand[i].suit+" "+hand[i].value+" "+hand[i].name+". ");
+            //System.out.print(hand[i].value+". ");
         }
+        //System.out.print("end ");
     }
     public void shuffleDeck() {
         Random hold = new Random();
@@ -81,10 +83,30 @@ public class Deck {
         }
     }
     public void selectionSortHand() {
-
+        for(int x = 0; x < hand.length-1; x++) {
+            Card lowest = hand[x];
+            int lowestIndex = x;
+            for (int i = x+1; i < hand.length; i ++) {
+                //if the card here is lower than the current lowest
+                if (hand[i].value < lowest.value) {
+                    //change the value of lowest to this card
+                    lowest = hand[i];
+                    //change the index too
+                    lowestIndex = i;
+                }
+            }
+            //now that we have the lowest card, move it to the beginning of the array
+            if(lowestIndex != x) {
+                swap(hand, lowestIndex, x);
+            }
+        }
     }
     public void mergeSortHand() {
-
+        //split array into 2 and keep going until you have to stop
+        //sort each part of the array
+        //merge them into one
+        Card[] halfHand1 = new Card[(hand.length+1)/2];
+        System.arraycopy(hand, 0, halfHand1, halfHand1.length, hand.length/2);
     }
     public void binarySearch(int suit, int face) {
 
