@@ -3,7 +3,6 @@ public class runner {
         Deck d = new Deck(true);
         d.shuffleDeck();
         d.dealHand(7);
-        //d.listHand();
         d.mergeSortHand();
         d.listHand();
     }

@@ -54,7 +54,6 @@ public class Deck {
         for(int i = 0; i < numCards; i++) {
             hand[i] = allCards[i];
         }
-        //listHand();
     }
 
     public void listHand() {
@@ -101,62 +100,64 @@ public class Deck {
             }
         }
     }
+
+    public void divide(Card[] arr) {
+
+    }
+    public void merge() {
+
+    }
     public void mergeSortHand() {
         //keep halving array until you get to 1s
         //sort each of the arrays + merge into pairs, 4s, etc
 
-
         //need to make sure the arrays will split down all the way
         //how to swap the arrays?
 
-        Card[] sorted = new Card[(hand.length)];
+        this.divide(hand);
+        this.merge();
 
-        for(int i = 0; i < hand.length; i ++) {
-            //splits array for 1st time (halves)
-            Card[] halfHand1 = new Card[(hand.length)/2];
-            Card[] halfHand2 = new Card[(hand.length)/2];
-            System.arraycopy(hand, 0, halfHand1, 0, halfHand1.length);
-            System.arraycopy(hand, hand.length/2, halfHand2, 0, halfHand2.length);
-
-            //splits array again (quarters)
-            Card[] tempArray = new Card[(halfHand1.length)/2];
-            Card[] tempArray2 = new Card[(halfHand1.length)/2];
-            Card[] tempArray3 = new Card[(halfHand2.length)/2];
-            Card[] tempArray4 = new Card[(halfHand2.length)/2];
-
-            System.arraycopy(halfHand1, 0, tempArray, 0, tempArray.length);
-            System.arraycopy(halfHand1, halfHand1.length/2, tempArray2, 0, tempArray.length);
-
-            System.arraycopy(halfHand2, 0, tempArray3, 0, tempArray.length);
-            System.arraycopy(halfHand2, halfHand2.length/2, tempArray4, 0, tempArray.length);
+        Card[] sorted = new Card[hand.length];
+        //System.arraycopy(hand, 0, sorted, 0, hand.length);
 
 
-            //swaps within the quarters
+        Card[] halfHand1 = new Card[(hand.length / 2)];
+        Card[] halfHand2 = new Card[(hand.length / 2)+1];
+
+        System.arraycopy(hand, 0, halfHand1, 0, halfHand1.length);
+        System.arraycopy(hand, (hand.length-1)/2, halfHand2, 0, halfHand2.length);
+
+//        if(halfHand1.length > 1) {
+//            for(int x = 0; x < hand.length; x ++) {
+//                System.arraycopy(hand, x, halfHand1, x, halfHand1.length);
+//                System.arraycopy(hand, x+1, halfHand2, x+1, halfHand2.length);
+//            }
+//        }
+
+        for(int i = 2; i < hand.length-2; i +=2) {
+
+            //swaps within the parts
             for(int x = 0; x < halfHand1.length-1; x++) {
-                if(tempArray[x].value > tempArray[x+1].value) {
-                    swap(tempArray, x, x+1);
+                if(halfHand1[x].value > halfHand1[x+1].value) {
+                    swap(halfHand1, x, x+1);
                 }
-                if(tempArray2[x].value > tempArray2[x+1].value) {
-                    swap(tempArray2, x, x+1);
-                }
-
-                if(tempArray3[x].value > tempArray3[x+1].value) {
-                    swap(tempArray3, x, x+1);
-                }
-                if(tempArray4[x].value > tempArray4[x+1].value) {
-                    swap(tempArray4, x, x+1);
+                if(halfHand2[x].value > halfHand2[x+1].value) {
+                    swap(halfHand2, x, x+1);
                 }
 
-                System.arraycopy(tempArray, 0, halfHand1, 0, halfHand1.length);
-                System.arraycopy(tempArray2, halfHand1.length/2, halfHand1, 0, halfHand1.length);
+                System.arraycopy(halfHand1, 0, halfHand1, 0, halfHand1.length/2);
+                System.arraycopy(halfHand2, (hand.length-1)/2, halfHand2, 0, (halfHand2.length-1)/2);
 
-                System.arraycopy(tempArray3, 0, halfHand2, 0, halfHand2.length);
-                System.arraycopy(tempArray4, halfHand2.length/2, halfHand2, 0, halfHand2.length);
             }
-            System.arraycopy(halfHand1, 0, hand, 0, hand.length);
-            System.arraycopy(halfHand2, hand.length/2, hand, 0, hand.length);
+            System.arraycopy(halfHand1, 0, sorted, 0, (hand.length-1)/2);
+            System.arraycopy(halfHand2, 0, sorted, hand.length/2, (hand.length-1)/2);
         }
-
+        for(int z = 0; z < sorted.length-2; z++) {
+            if(sorted[z].value > sorted[z+1].value) {
+                swap(sorted, z, z+1);
+            }
+        }
+        System.arraycopy(sorted, 0, hand, 0, hand.length);
     }
 
     public void binarySearch(int suit, int face) {
